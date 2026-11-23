@@ -198,7 +198,6 @@ function drawEntries(entries) {
 
 function drawActual() {
   const month = activeMonth;
-  const next = monthAfter(month);
   $('period').textContent = monthLabel(month) + 'の暦月集計';
   const entries = state.transactions.filter(item => item.date.startsWith(month));
   const totals = (list, kind, category) => sum(list.filter(item => item.kind === kind && (!category || item.category === category)).map(item => item.amount));
@@ -213,7 +212,6 @@ function drawActual() {
   const base = sum([cash,bank]);
   const commitments = sum([cards,fixed,invest,budget]);
   const free = base == null || commitments == null ? null : base - commitments;
-  const wages = state.transactions.filter(item => item.date >= month + '-25' && item.date <= next + '-24');
   const data = [
     ['自由に使える金額',free,'残高 − 未払金・固定費・積立・残りの予算'],
     ['現金・口座残高',base,state.actual[month]?.date ?? '基準日未確認'],
@@ -221,8 +219,7 @@ function drawActual() {
     ['支出実績',totals(entries,'expense'),'暦月・登録分'],
     ['食費実績',totals(entries,'expense','食費'),'暦月・登録分'],
     ['NISA積立実績',totals(entries,'invest'),'暦月・登録分'],
-    ['給与（暦月）',totals(entries,'salary'),'1日〜末日・登録分'],
-    ['給与（25日始まり）',totals(wages,'salary'),month + '-25 〜 ' + next + '-24']
+    ['給与（入金日）',totals(entries,'salary'),'1日〜末日・登録分']
   ];
   $('metrics').replaceChildren(...data.map(([title,value,detail], index) => {
     const card = make('div',null,index ? 'metric' : 'metric primary');

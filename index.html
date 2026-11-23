@@ -9,7 +9,7 @@
 <section id="actual">
 <div class="sectionhead"><div><h2>今月の家計</h2><p id="period"></p></div></div>
 <div class="metrics" id="metrics"></div>
-<aside>カード・後払いの支出は利用日で集計します。引落は未払金の精算として記録し、支出集計から除外します。給与は暦月と、25日〜翌24日の期間で確認できます。</aside>
+<aside>カード・後払いの支出は利用日で集計します。引落は未払金の精算として記録し、支出集計から除外します。給与は入金日で、毎月1日〜末日に集計します。</aside>
 <section class="panel"><h2>残高と今後の支払い</h2><p>基準日時点の残高と、これから支払う金額を入力します。同じ支払いは該当する欄に一度だけ入力してください。</p>
 <form id="position">
 <div class="fields" id="positions"></div>
@@ -17,7 +17,7 @@
 </form></section>
 <section class="panel"><h2>明細を入力</h2><p>金額が未確認のときは空欄で保存できます。</p>
 <form id="transaction"><div class="fields txn">
-<label>日付<input type="date" name="date" required></label>
+<label>日付（給与は入金日）<input type="date" name="date" required></label>
 <label>種類<select name="kind"><option value="expense">支出実績</option><option value="salary">給与</option><option value="settlement">カード・後払いの引落精算</option><option value="invest">NISA積立実績</option></select></label>
 <label>支払方法・口座<select name="method"><option>現金</option><option>銀行口座</option><option>カード</option><option>後払い</option></select></label>
 <label>費目<select name="category"><option>食費</option><option>家賃</option><option>生活費</option><option>固定費</option><option>その他</option></select></label>
@@ -25,7 +25,7 @@
 <label>口座・カード名／メモ<input name="memo" maxlength="100"></label>
 </div><div class="actions"><button id="saveEntry">明細を追加</button><button type="button" class="quiet" id="cancelEdit" hidden>編集を取り消す</button><span id="entryStatus" role="status"></span></div></form>
 </section>
-<section class="panel"><h2>明細一覧</h2><p>選択月の明細を表示します。給与の25日始まり集計には翌月24日までの登録分も含みます。</p><div class="tablewrap"><table><thead><tr><th>日付</th><th>種類・費目</th><th>支払方法</th><th>メモ</th><th class="num">金額</th><th>操作</th></tr></thead><tbody id="entries"></tbody></table></div></section>
+<section class="panel"><h2>明細一覧</h2><p>選択月の明細を表示します。</p><div class="tablewrap"><table><thead><tr><th>日付</th><th>種類・費目</th><th>支払方法</th><th>メモ</th><th class="num">金額</th><th>操作</th></tr></thead><tbody id="entries"></tbody></table></div></section>
 </section>
 <section id="plan" hidden>
 <div class="sectionhead"><div><h2 id="planTitle"></h2><p>相談用の見込み額を入力して、月末残高と月間収支を比較します。</p></div></div>
