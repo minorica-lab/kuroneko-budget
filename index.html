@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="暦月の実績と翌月の資金計画を管理する家計簿"><title>クロネコちゃんの家計簿</title><link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48"><link rel="stylesheet" href="style.css"><script src="app.js" defer></script></head>
+<body>
+<header><div class="wrap brand"><img class="mark" src="brand-cat.png" width="34" height="34" alt=""><strong>クロネコちゃんの家計簿</strong><span class="storage">デモ版</span></div></header>
+<main class="wrap">
+<div class="hero"><div><p class="eyebrow">家計管理</p><h1>家計簿と資金計画</h1><p>サンプルの明細で、月ごとの集計と翌月の資金計画を試せます。</p></div><label class="month">実績の対象月<input type="month" id="month" required></label></div>
+<nav aria-label="表示切替"><button id="actualTab" aria-controls="actual" aria-pressed="true">家計簿の実績</button><button id="planTab" aria-controls="plan" aria-pressed="false">翌月の資金計画</button></nav>
+<section id="actual">
+<div class="sectionhead"><div><h2>今月の家計</h2><p id="period"></p></div></div>
+<div class="metrics" id="metrics"></div>
+<aside>カード・後払いの支出は利用日で集計します。引落は未払金の精算として記録し、支出集計から除外します。給与は暦月と、25日〜翌24日の期間で確認できます。</aside>
+<section class="panel"><h2>残高と今後の支払い</h2><p>基準日時点の残高と、これから支払う金額を入力します。同じ支払いは該当する欄に一度だけ入力してください。</p>
+<form id="position">
+<div class="fields" id="positions"></div>
+<div class="actions"><button type="button" class="quiet" id="addPosition">項目を追加</button><button>残高・支払いを保存</button><span id="positionStatus" role="status"></span></div>
+</form></section>
+<section class="panel"><h2>明細を入力</h2><p>金額が未確認のときは空欄で保存できます。</p>
+<form id="transaction"><div class="fields txn">
+<label>日付<input type="date" name="date" required></label>
+<label>種類<select name="kind"><option value="expense">支出実績</option><option value="salary">給与</option><option value="settlement">カード・後払いの引落精算</option><option value="invest">NISA積立実績</option></select></label>
+<label>支払方法・口座<select name="method"><option>現金</option><option>銀行口座</option><option>カード</option><option>後払い</option></select></label>
+<label>費目<select name="category"><option>食費</option><option>家賃</option><option>生活費</option><option>固定費</option><option>その他</option></select></label>
+<label>金額（円）<input name="amount" type="number" step="1" min="0" placeholder="未確認"></label>
+<label>口座・カード名／メモ<input name="memo" maxlength="100"></label>
+</div><div class="actions"><button id="saveEntry">明細を追加</button><button type="button" class="quiet" id="cancelEdit" hidden>編集を取り消す</button><span id="entryStatus" role="status"></span></div></form>
+</section>
+<section class="panel"><h2>明細一覧</h2><p>選択月の明細を表示します。給与の25日始まり集計には翌月24日までの登録分も含みます。</p><div class="tablewrap"><table><thead><tr><th>日付</th><th>種類・費目</th><th>支払方法</th><th>メモ</th><th class="num">金額</th><th>操作</th></tr></thead><tbody id="entries"></tbody></table></div></section>
+</section>
+<section id="plan" hidden>
+<div class="sectionhead"><div><h2 id="planTitle"></h2><p>相談用の見込み額を入力して、月末残高と月間収支を比較します。</p></div></div>
+<section class="panel"><h2>予測の前提</h2><p>見込みが未確認の欄は空欄にし、支払いがないと確認できた欄は0円を入力します。食費・生活費などの見込みには、カード引落欄に含めた支払いを除いた金額を入力します。</p><form id="forecast"><div id="assumptions" class="fields"></div><div class="actions"><button>予測を保存</button><span id="planStatus" role="status"></span></div></form></section>
+<section class="panel"><h2>シミュレーション比較</h2><p>支出総額は翌月の現金流出です。黒字判定は「翌月の給与 − 現金流出」で行います。NISAの取り崩しは月末残高に加えます。一括返済の案では、通常返済を入力した一括返済額に置き換えます。</p>
+<div class="tablewrap"><table><thead><tr><th>シナリオ</th><th class="num">支出総額</th><th class="num">月末残高</th><th class="num">月間収支</th><th>黒字化の見込み</th></tr></thead><tbody id="scenarios"></tbody></table></div></section>
+</section>
+<footer>初期データはすべて架空です。明細と資金計画の入力はこのブラウザに保存されます。</footer>
+</main></body></html>
